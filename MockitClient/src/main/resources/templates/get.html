@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Mockit</title>
+<link rel="stylesheet"
+	href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css">
+<script src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
+<script
+	src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+	<ul class="nav nav-pills">
+		<li><a href="#">Home</a></li>
+		<li class="active"><a href="#">Mockit</a></li>
+		<li><a href="#">About</a></li>
+	</ul>
+	<div id="focus">MockitServer: 172.16.7.122:8888</div>
+	<form class="form-horizontal" action="http://127.0.0.1:7202/get"
+		method="get">
+		<div class="form-group">
+
+			<label class="control-label col-lg-3" for="dp2">RequestMethod:
+			</label>
+			<div class="col-lg-3">
+				<input type="text" name="method" value="$!method"
+					class="form-control">
+			</div>
+
+			<label class="control-label col-lg-3" for="dp2">RequestUrl:</label>
+			<div class="col-lg-3">
+				<input type="text" class="form-control" value="$!url" name="url">
+			</div>
+
+			<label class="control-label col-lg-3" for="dp2">From IP:</label>
+			<div class="col-lg-3">
+				<input type="text" class="form-control" maxLength="50" value="$!ip"
+					name="ip">
+			</div>
+
+			<label class="control-label col-lg-3" for="dp2">RequestTime:</label>
+			<div class="col-lg-3">
+				<input type="text" class="form-control" maxLength="50"
+					value="$!requestTime" name="requestTime">
+			</div>
+
+		</div>
+		<div class="form-group">
+			<label class="control-label col-lg-4"> </label>
+			<div class="col-lg-3">
+				<button type="submit" value="Search"
+					class="btn btn-info form-control">Search</button>
+			</div>
+		</div>
+	</form>
+
+	<div class="container-fluid ">
+		<table
+			class="table table-hover table-responsive table-condensed table-striped table-bordered ">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>RequestMethod</th>
+					<th>RequestUrl</th>
+					<th>From IP</th>
+					<th>RequestTime</th>
+				</tr>
+			</thead>
+			#if($requests.size()!=0)
+			<tbody>
+				#foreach($r in $requests)
+
+				<tr>
+					<td>$!r.id</td>
+					<td>$!r.method</td> #if($!r.url.length() > 100)
+					<td><a href="$!r.url">$!r.url.substring(0,100)...</a></td> #else
+					<td><a href="$!r.url">$!r.url</a></td> #end
+					<td>$!r.ip</td>
+					<td>$!r.requestTime</td>
+				</tr>
+
+				#end
+			</tbody>
+			#end
+		</table>
+	</div>
+
+	<script type="text/javascript">
+		function myrefresh() {
+			window.location.reload();
+			window.location.hash = "#focus";
+		}
+
+		setTimeout('myrefresh()', 3000);
+	</script>
+
+</body>
+
+</html>
